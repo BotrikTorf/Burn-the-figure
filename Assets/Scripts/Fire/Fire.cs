@@ -6,4 +6,6 @@ public abstract class Fire : MonoBehaviour
     [SerializeField] private protected ParticleSystem Particle;
 
     protected abstract void OnTriggerEnter(Collider collider);
+
+    public abstract void Reload();
 }

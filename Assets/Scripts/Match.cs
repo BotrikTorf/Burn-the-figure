@@ -1,17 +1,32 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Match : MonoBehaviour
 {
     [SerializeField] private Attenuation _attenuation;
+    [SerializeField] private Combustion _combustion;
+    [SerializeField] private Ignition _ignition;
 
     private float _speed = 1f;
+    private int stateBurning = 1;
+    private int stateBurnt = 2;
 
-    public bool IsMatchBurned { get; private set; } = false;
+    public int State { get; private set; } = 0;
 
-    private void OnEnable() => _attenuation.BurnedMatch += OnatchBurned;
+    public event UnityAction BurnedDown;
 
-    private void OnDisable() => _attenuation.BurnedMatch -= OnatchBurned;
+    private void OnEnable()
+    {
+        _attenuation.BurnedMatch += OnBurnedMatch;
+        _combustion.BurningMatch += OnBurningMatch;
+    }
+
+    private void OnDisable()
+    {
+        _attenuation.BurnedMatch -= OnBurnedMatch;
+        _combustion.BurningMatch -= OnBurningMatch;
+    }
 
     private void OnMouseDown()
     {
@@ -19,7 +34,21 @@ public class Match : MonoBehaviour
             StartCoroutine(Flips());
     }
 
-    private void OnatchBurned() => IsMatchBurned = true;
+    public void Reload()
+    {
+        _combustion.Reload();
+        _attenuation.Reload();
+        _ignition.Reload();
+
+    }
+
+    private void OnBurnedMatch()
+    {
+        State = stateBurnt;
+        BurnedDown?.Invoke();
+    }
+
+    private void OnBurningMatch() => State = stateBurning;
 
     private IEnumerator Flips()
     {

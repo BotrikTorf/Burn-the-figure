@@ -5188,6 +5188,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attenuation: {fileID: 2739102617932839577}
+  _combustion: {fileID: 2739102619560832670}
+  _ignition: {fileID: 2739102618061821428}
 --- !u!1 &2739102619560832667
 GameObject:
   m_ObjectHideFlags: 0
@@ -5317,8 +5319,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Particle: {fileID: 2739102619626340218}
-  _endPosition: {fileID: 2739102617932839573}
+  _endTransform: {fileID: 2739102617932839573}
   _match: {fileID: 7477332806469156499}
+  _startTransform: {fileID: 2739102618061821424}
 --- !u!1 &2739102619626340217
 GameObject:
   m_ObjectHideFlags: 0
