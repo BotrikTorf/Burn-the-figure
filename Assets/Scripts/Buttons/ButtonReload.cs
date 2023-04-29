@@ -1,13 +1,6 @@
-using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonReload : ButtonProject
 {
-    [SerializeField] private Spawner _spawner;
-    [SerializeField] private Fuse _fuse;
-
-    protected override void OnButtonClick()
-    {
-        _fuse.Reload();
-        _spawner.Reload();
-    }
+    protected override void OnButtonClick() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 }

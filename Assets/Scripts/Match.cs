@@ -6,7 +6,6 @@ public class Match : MonoBehaviour
 {
     [SerializeField] private Attenuation _attenuation;
     [SerializeField] private Combustion _combustion;
-    [SerializeField] private Ignition _ignition;
 
     private float _speed = 1f;
     private int stateBurning = 1;
@@ -34,19 +33,14 @@ public class Match : MonoBehaviour
             StartCoroutine(Flips());
     }
 
-    public void Reload()
-    {
-        _combustion.Reload();
-        _attenuation.Reload();
-        _ignition.Reload();
-
-    }
-
     private void OnBurnedMatch()
     {
         State = stateBurnt;
-        BurnedDown?.Invoke();
+        InvokeRepeating("Run", 1, 0);
+
     }
+
+    private void Run() => BurnedDown?.Invoke();
 
     private void OnBurningMatch() => State = stateBurning;
 

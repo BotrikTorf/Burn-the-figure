@@ -1,22 +1,16 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Transform))]
 public class Combustion : Fire
 {
     [SerializeField] private Transform _endTransform;
     [SerializeField] private Match _match;
-    [SerializeField] private Transform _startTransform;
 
     private Transform _transform;
-    private Vector3 _startPosition;
-    private float _speed = 0.0005f;
+    private float _speed = 0.005f;
     private int _stateBurnt = 2;
-    private float _startPositionX;
-    private float _startPositionY;
-    private float _startPositionZ;
 
     public event UnityAction BurningMatch;
 
@@ -36,26 +30,6 @@ public class Combustion : Fire
             Particle.Play();
             StartCoroutine(MovementFire());
         }
-    }
-
-    private void Start()
-    {
-        //_startPosition = new Vector3(
-        //    _startTransform.position.x,
-        //    _startTransform.position.y,
-        //    _startTransform.position.z);
-
-        _startPositionX = transform.position.x;
-         _startPositionY = transform.position.y;
-        _startPositionZ = transform.position.z;
-    }
-
-    public override void Reload()
-    {
-        StopCoroutine(MovementFire());
-        transform.position = new Vector3(_startPositionX, _startPositionY, _startPositionZ);
-        Particle.Stop();
-        Particle.gameObject.SetActive(false);
     }
 
     private IEnumerator MovementFire()

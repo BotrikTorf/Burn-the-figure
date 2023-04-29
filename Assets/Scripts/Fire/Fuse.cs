@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(SphereCollider))]
 public class Fuse : MonoBehaviour
@@ -7,13 +8,19 @@ public class Fuse : MonoBehaviour
 
     private SphereCollider _collider;
 
+    public event UnityAction BurningMatch;
+
     private void Awake() => _collider = GetComponent<SphereCollider>();
 
     private void OnEnable() => _buttonGame.PlayGame += OnPlayGame;
 
     private void OnDisable() => _buttonGame.PlayGame -= OnPlayGame;
 
-    public void Reload() => _collider.radius = 0.1f;
+    private void OnPlayGame()
+    {
+        _collider.radius = 1f;
+        InvokeRepeating("Run", 1, 0);
+    }
 
-    private void OnPlayGame() => _collider.radius = 1f;
+    private void Run() => BurningMatch?.Invoke();
 }

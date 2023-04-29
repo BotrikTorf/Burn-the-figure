@@ -20,11 +20,4 @@ public class Attenuation : Fire
             BurnedMatch?.Invoke();
         }
     }
-
-    public override void Reload()
-    {
-        Particle.Stop();
-        Particle.gameObject.SetActive(false);
-        _sphereCollider.radius = 0.5f;
-    }
 }

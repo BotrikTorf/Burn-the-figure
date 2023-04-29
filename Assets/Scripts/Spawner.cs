@@ -1,14 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private ButtonGame _buttonGame;
     [SerializeField] private GameObject _match;
+    [SerializeField] private Fuse _fuse;
+    [SerializeField] private GameObject _panelVictory;
+    [SerializeField] private GameObject _panelLoss;
 
     private int _levelStart;
     private List<int> _lintsNumberMatch;
-    private List<GameObject> _matchs;
+    private List<Match> _matchs;
 
     private Dictionary<int, float[]> _pointSpawner = new Dictionary<int, float[]>
     {
@@ -21,54 +25,34 @@ public class Spawner : MonoBehaviour
         { 7, new float[3] { 0, 11, 90 } }
     };
 
+    public static bool IsPlayGame { get; private set; }
+
     private void Awake()
     {
         _levelStart = LevelGame.GetLevel();
         _lintsNumberMatch = (List<int>)LevelGame.GetMatchNumbers(_levelStart);
-        _matchs = new List<GameObject>(_lintsNumberMatch.Count);
+        _matchs = new List<Match>(_lintsNumberMatch.Count);
         CreateMatches();
+        IsPlayGame = false;
     }
-
-    public static bool IsPlayGame { get; private set; } = false;
 
     private void OnEnable()
     {
         _buttonGame.PlayGame += OnPlayGame;
+        _fuse.BurningMatch += OnBurnedDown;
 
         foreach (var match in _matchs)
-            match.GetComponentInChildren<Match>().BurnedDown += OnBurnedDown;
+            match.BurnedDown += OnBurnedDown;
     }
 
     private void OnDisable()
     {
         _buttonGame.PlayGame -= OnPlayGame;
+        _fuse.BurningMatch -= OnBurnedDown;
 
         foreach (var match in _matchs)
-            match.GetComponentInChildren<Match>().BurnedDown -= OnBurnedDown;
+            match.BurnedDown -= OnBurnedDown;
     }
-
-    public void Reload()
-    {
-        IsPlayGame = false;
-
-        foreach (var match in _matchs)
-            match.GetComponentInChildren<Match>().Reload();
-
-        for (int i = 0; i < _matchs.Count; i++)
-        {
-            float[] valuePosition = _pointSpawner[_lintsNumberMatch[i]];
-            float[] valueRotation = { valuePosition[2], valuePosition[2] - 180 };
-            _matchs[i].transform.rotation =
-                Quaternion.Euler(new Vector3(0, 0, valueRotation[Random.Range(0, valueRotation.Length)]));
-        }
-    }
-
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-
-    //}
 
     private void OnPlayGame() => IsPlayGame = true;
 
@@ -79,27 +63,21 @@ public class Spawner : MonoBehaviour
 
         foreach (var match in _matchs)
         {
-            if (match.GetComponentInChildren<Match>().State == 1)
+            if (match.State == 1)
             {
                 haveBurningMatches = true;
                 break;
             }
 
-            if (match.GetComponentInChildren<Match>().State == 2)
+            if (match.State == 2)
                 matchBurned++;
         }
 
         if (matchBurned == _matchs.Count)
-        {
-            Debug.Log("Win");
-        }
-        else
-        {
-            if (haveBurningMatches == false && matchBurned < _matchs.Count)
-            {
-                Debug.Log("Loss");
-            }
-        }
+            ShowVictoryPanel();
+        else if (haveBurningMatches == false && matchBurned < _matchs.Count)
+            ShowLossPanel();
+
     }
 
     private void CreateMatches()
@@ -108,10 +86,23 @@ public class Spawner : MonoBehaviour
         {
             float[] valuePosition = _pointSpawner[_lintsNumberMatch[i]];
             float[] valueRotation = { valuePosition[2], valuePosition[2] - 180 };
-            GameObject clonMatct = Instantiate(_match,
+            GameObject cloneMatch = Instantiate(_match,
                 new Vector3(valuePosition[0], valuePosition[1], 0),
                 Quaternion.Euler(new Vector3(0, 0, valueRotation[Random.Range(0, valueRotation.Length)])));
-            _matchs.Add(clonMatct);
+            _matchs.Add(cloneMatch.GetComponent<Match>());
         }
     }
+
+    private void ShowLossPanel()
+    {
+        _panelLoss.SetActive(true);
+    }
+
+    private void ShowVictoryPanel()
+    {
+        _panelVictory.SetActive(true);
+        InvokeRepeating("ExitMenuScene", 2, 0);
+    }
+
+    private void ExitMenuScene() => SceneManager.LoadScene(0);
 }

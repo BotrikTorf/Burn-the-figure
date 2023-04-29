@@ -16,10 +16,4 @@ public class Ignition : Fire
             Particle.Play();
         }
     }
-
-    public override void Reload()
-    {
-        Particle.Stop();
-        Particle.gameObject.SetActive(false);
-    }
 }
