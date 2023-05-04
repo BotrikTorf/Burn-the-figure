@@ -4,16 +4,19 @@ public class Ignition : Fire
 {
     [SerializeField] private Match _match;
 
-    private int stateBurnt = 2;
+    private int _stateBurnt = 2;
 
     protected override void OnTriggerEnter(Collider collider)
     {
         if (collider.TryGetComponent(out Attenuation _) 
-            || collider.TryGetComponent(out Fuse _) 
-            && _match.State != stateBurnt)
+            || collider.TryGetComponent(out Fuse _))
         {
-            Particle.gameObject.SetActive(true);
-            Particle.Play();
+            if (_match.State != _stateBurnt)
+            {
+                Particle.gameObject.SetActive(true);
+                Particle.Play();
+            }
+
         }
     }
 }

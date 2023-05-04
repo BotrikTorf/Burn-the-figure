@@ -11,7 +11,8 @@ public static class LevelGame
         new []{1, 2, 3, 4, 7},
         new []{1, 2, 4, 5, 6, 7},
         new []{1, 2, 3, 4, 5, 7},
-        new []{1, 2, 3, 4, 5, 6}
+        new []{1, 2, 3, 4, 5, 6},
+        new []{1, 2, 3, 4, 5, 6, 7}
     };
 
     public static IReadOnlyList<int> GetMatchNumbers(int level) =>

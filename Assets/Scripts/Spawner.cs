@@ -93,10 +93,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    private void ShowLossPanel()
-    {
-        _panelLoss.SetActive(true);
-    }
+    private void ShowLossPanel() => _panelLoss.SetActive(true);
 
     private void ShowVictoryPanel()
     {

@@ -1,8 +1,4 @@
-using UnityEngine.Events;
-
-public class ButtonLevelTwo : ButtonGame
+public class ButtonLevelTwo : ButtonLevel
 {
-    public event UnityAction<int> LevelNumber;
-
-    protected override void OnButtonClick() => LevelNumber?.Invoke(1);
+    private void Start() => NumberLevel = 1;
 }

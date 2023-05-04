@@ -22,13 +22,15 @@ public class Combustion : Fire
     protected override void OnTriggerEnter(Collider collider)
     {
         if (collider.TryGetComponent(out Attenuation _)
-            || collider.TryGetComponent(out Fuse _)
-            && _match.State != _stateBurnt)
+            || collider.TryGetComponent(out Fuse _))
         {
-            BurningMatch?.Invoke();
-            Particle.gameObject.SetActive(true);
-            Particle.Play();
-            StartCoroutine(MovementFire());
+            if (_match.State != _stateBurnt)
+            {
+                BurningMatch?.Invoke();
+                Particle.gameObject.SetActive(true);
+                Particle.Play();
+                StartCoroutine(MovementFire());
+            }
         }
     }
 
