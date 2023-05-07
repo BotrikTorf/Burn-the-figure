@@ -14,15 +14,15 @@ public class Spawner : MonoBehaviour
     private List<int> _lintsNumberMatch;
     private List<Match> _matchs;
 
-    private Dictionary<int, float[]> _pointSpawner = new Dictionary<int, float[]>
+    private Dictionary<int, float[]> _pointsSpawner = new Dictionary<int, float[]>
     {
         { 1, new float[3] { 0, 0, 90 } },
-        { 2, new float[3] { 5, 5.5f, 0 } },
-        { 3, new float[3] { 5, 16.5f, 0 } },
-        { 4, new float[3] { 0, 22, 90 } },
-        { 5, new float[3] { -5, 16.5f, 0 } },
-        { 6, new float[3] { -5, 5.5f, 0 } },
-        { 7, new float[3] { 0, 11, 90 } }
+        { 2, new float[3] { 3.8f, 3.8f, 0 } },
+        { 3, new float[3] { 3.8f, 11.3f, 0 } },
+        { 4, new float[3] { 0, 15.1f, 90 } },
+        { 5, new float[3] { -3.8f, 11.3f, 0 } },
+        { 6, new float[3] { -3.8f, 3.8f, 0 } },
+        { 7, new float[3] { 0, 7.5f, 90 } }
     };
 
     public static bool IsPlayGame { get; private set; }
@@ -84,7 +84,7 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < _lintsNumberMatch.Count; i++)
         {
-            float[] valuePosition = _pointSpawner[_lintsNumberMatch[i]];
+            float[] valuePosition = _pointsSpawner[_lintsNumberMatch[i]];
             float[] valueRotation = { valuePosition[2], valuePosition[2] - 180 };
             GameObject cloneMatch = Instantiate(_match,
                 new Vector3(valuePosition[0], valuePosition[1], 0),

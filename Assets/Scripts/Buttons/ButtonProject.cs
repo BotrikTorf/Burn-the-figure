@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(ButtonProject))]
-public abstract class ButtonProject: MonoBehaviour
+public abstract class ButtonProject : MonoBehaviour
 {
     protected Button Button;
 
