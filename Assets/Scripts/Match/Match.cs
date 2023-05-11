@@ -6,6 +6,7 @@ public class Match : MonoBehaviour
 {
     [SerializeField] private Attenuation _attenuation;
     [SerializeField] private Combustion _combustion;
+    [SerializeField] private Ignition _ignition;
 
     private float _speed = 1f;
     private int stateBurning = 1;
@@ -46,6 +47,9 @@ public class Match : MonoBehaviour
 
     private IEnumerator Flips()
     {
+        _combustion.ControlsStateCollider();
+        _ignition.ControlsStateCollider();
+
         float deltaPosition = 0f;
         float liftingHeight = -5;
         Vector3 startPosition = gameObject.transform.position;
@@ -83,5 +87,7 @@ public class Match : MonoBehaviour
         }
 
         gameObject.transform.position = startPosition;
+        _combustion.ControlsStateCollider();
+        _ignition.ControlsStateCollider();
     }
 }

@@ -74,9 +74,17 @@ public class Spawner : MonoBehaviour
         }
 
         if (matchBurned == _matchs.Count)
+        {
+            RemovesMatches();
             ShowVictoryPanel();
+        }
+
         else if (haveBurningMatches == false && matchBurned < _matchs.Count)
+        {
+            RemovesMatches();
             ShowLossPanel();
+        }
+
 
     }
 
@@ -102,4 +110,10 @@ public class Spawner : MonoBehaviour
     }
 
     private void ExitMenuScene() => SceneManager.LoadScene(0);
+
+    private void RemovesMatches()
+    {
+        foreach (var match in _matchs)
+            match.gameObject.SetActive(false);
+    }
 }

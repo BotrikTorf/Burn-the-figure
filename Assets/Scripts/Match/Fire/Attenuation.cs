@@ -20,11 +20,11 @@ public class Attenuation : Fire
     {
         if (collider.TryGetComponent(out Combustion _) && _match.State != stateBurnt)
         {
+            BurnedMatch?.Invoke();
             Particle.gameObject.SetActive(true);
             Particle.Play();
             _sphereCollider.radius = 3f;
             _meshRenderer.material = _material;
-            BurnedMatch?.Invoke();
         }
     }
 }

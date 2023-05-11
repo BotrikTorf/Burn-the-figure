@@ -7,7 +7,6 @@ public class Cylinder : MonoBehaviour
 
     private MeshRenderer _meshRenderer;
 
-
     private void Awake() => _meshRenderer = GetComponent<MeshRenderer>();
 
     private void OnTriggerExit(Collider collider)

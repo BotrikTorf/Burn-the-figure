@@ -20,6 +20,7 @@ public class Fuse : MonoBehaviour
 
     private void OnPlayGame()
     {
+        _collider.enabled = true;
         _collider.radius = 1.5f;
         InvokeRepeating(_nameMethod, 1, 0);
     }
