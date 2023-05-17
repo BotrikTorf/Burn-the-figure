@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.agava.yandexgames": {
-      "version": "https://github.com/forcepusher/com.agava.yandexgames.git",
+      "version": "https://github.com/forcepusher/com.agava.yandexgames.git#13.0.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},

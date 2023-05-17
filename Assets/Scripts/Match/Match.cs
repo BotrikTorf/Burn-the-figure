@@ -8,7 +8,7 @@ public class Match : MonoBehaviour
     [SerializeField] private Combustion _combustion;
     [SerializeField] private Ignition _ignition;
 
-    private float _speed = 1f;
+    private float _speed = 2f;
     private int stateBurning = 1;
     private int stateBurnt = 2;
 
@@ -73,7 +73,7 @@ public class Match : MonoBehaviour
         {
             gameObject.transform.Rotate(0, 0, 1f, Space.Self);
             stepTurning += 1;
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.008f / _speed);
         }
 
         deltaPosition = 0f;
